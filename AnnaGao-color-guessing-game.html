@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Guessing Game</title>
+</head>
+
+<body>
+    <h1>Color Guessing Game</h1>
+    <button type="button" onclick="runGame()">Start Game</button>
+    <script>
+        const COLORS_ARRAY = ['gold', 'gray', 'blue', 'cyan', 'green', 'magenta', 'orange', 'red', 'white', 'yellow'];
+        let targetIndex = Math.floor(Math.random() * COLORS_ARRAY.length);
+        let target = COLORS_ARRAY[targetIndex];
+        let lTarget = target.toLowerCase();
+
+        function runGame() {
+            let guess = "";
+            let correct = false;
+            let numTries = 0;
+            console.log(lTarget);
+            do {
+                let input = prompt('I am thinking of one of these colors:\n\n' + COLORS_ARRAY.join(",") +
+                    '\nWhat color am I thinking of?\n');
+                guess = input.toLowerCase();
+                if (guess === null) {
+                    return;
+                }
+                correct = checkGuess(guess, target);
+                numTries = numTries + 1;
+            } while (!correct);
+            document.body.style.background = guess;
+            alert("congrats! Your guess is correct after " + numTries + " times!");
+        };
+
+
+        function checkGuess(guess, target) {
+            let correct = false;
+            if (!COLORS_ARRAY.includes(guess)) {
+                alert("Sorry, your input is not a color!");
+            } else if (COLORS_ARRAY.indexOf(guess) > targetIndex) {
+                alert("Your guess is on the right side of the target")
+            } else if (COLORS_ARRAY.indexOf(guess) < targetIndex) {
+                alert("Your guess is on the left side of the target")
+            } else {
+                correct = true;
+            }
+            return correct;
+        }
+    </script>
+</body>
+
+</html>
